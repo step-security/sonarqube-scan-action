@@ -7,12 +7,21 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+permissions: {}
+
 jobs:
   create-install-dir-test:
+    permissions:
+      contents: read  # for actions/checkout to fetch code
     name: create_install_path.sh
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
 
@@ -106,6 +115,8 @@ jobs:
           grep "::error::Installation path 'not_writeable' is not writeable" output
           grep "=== Script failed ===" output
   setup-script-test:
+    permissions:
+      contents: read  # for actions/checkout to fetch code
     name: configure_paths.sh
     runs-on: ubuntu-latest
     env:
@@ -123,7 +134,12 @@ jobs:
       SONAR_SCANNER_URL_MACOSX_AARCH64: 'https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-vX.Y.Z.MMMM-macosx-aarch64.zip'
       SONAR_SCANNER_SHA_MACOSX_AARCH64: 'DOWNLOAD-SHA-MACOSX-AARCH64'
     steps:
-      - uses: actions/checkout@v6
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
 
@@ -249,10 +265,17 @@ jobs:
           grep "::error::Architecture 'X86' is unsupported by build-wrapper" output
           grep "=== Script failed ===" output
   download-script-test:
+    permissions:
+      contents: read  # for actions/checkout to fetch code
     name: download.sh
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
 
@@ -318,10 +341,17 @@ jobs:
           grep "::error::Checking sha256 failed" output
           grep "=== Script failed ===" output
   fetch-latest-version-test:
+    permissions:
+      contents: read  # for actions/checkout to fetch code
     name: fetch_latest_version.sh
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
       - name: Test script
