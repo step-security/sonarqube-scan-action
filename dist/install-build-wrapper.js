@@ -1,4 +1,4 @@
-import { e as execExports, b as addPath, i as info, l as setOutput, c as setFailed, m as startGroup, n as endGroup } from './exec-DB1unOGG.js';
+import { e as execExports, b as addPath, i as info, l as setOutput, c as setFailed, f as axios, g as error, m as startGroup, n as endGroup } from './exec-DFZO2h97.js';
 import * as fs from 'fs';
 import * as path from 'path';
 import 'os';
@@ -31,9 +31,15 @@ import 'node:dns';
 import 'string_decoder';
 import 'child_process';
 import 'timers';
+import 'stream';
+import 'url';
+import 'tty';
+import 'http2';
+import 'zlib';
 
 // SonarQube Scan Action
 // Copyright (C) SonarSource Sàrl
+// Copyright (c) 2026 StepSecurity
 // mailto:contact AT sonarsource DOT com
 //
 // This program is free software; you can redistribute it and/or
@@ -149,6 +155,7 @@ async function getRealPath(filePath, runnerOS) {
 
 // SonarQube Scan Action
 // Copyright (C) SonarSource Sàrl
+// Copyright (c) 2026 StepSecurity
 // mailto:contact AT sonarsource DOT com
 //
 // This program is free software; you can redistribute it and/or
@@ -165,6 +172,42 @@ async function getRealPath(filePath, runnerOS) {
 // along with this program; if not, write to the Free Software Foundation,
 // Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+
+async function validateSubscription() {
+  let repoPrivate;
+  const eventPath = process.env.GITHUB_EVENT_PATH;
+  if (eventPath && fs.existsSync(eventPath)) {
+    const payload = JSON.parse(fs.readFileSync(eventPath, "utf8"));
+    repoPrivate = payload?.repository?.private;
+  }
+
+  const upstream = 'sonarsource/sonarqube-scan-action';
+  const action = process.env.GITHUB_ACTION_REPOSITORY;
+  const docsUrl = 'https://docs.stepsecurity.io/actions/stepsecurity-maintained-actions';
+  info('');
+  info('\u001b[1;36mStepSecurity Maintained Action\u001b[0m');
+  info(`Secure drop-in replacement for ${upstream}`);
+  if (repoPrivate === false) info('\u001b[32m✓ Free for public repositories\u001b[0m');
+  info(`\u001b[36mLearn more:\u001b[0m ${docsUrl}`);
+  info('');
+  if (repoPrivate === false) return;
+  const serverUrl = process.env.GITHUB_SERVER_URL || 'https://github.com';
+  const body = { action: action || '' };
+  if (serverUrl !== 'https://github.com') body.ghes_server = serverUrl;
+  try {
+    await axios.post(
+      `https://agent.api.stepsecurity.io/v1/github/${process.env.GITHUB_REPOSITORY}/actions/maintained-actions-subscription`,
+      body, { timeout: 3000 }
+    );
+  } catch (error$1) {
+    if (axios.isAxiosError(error$1) && error$1.response?.status === 403) {
+      error(`\u001b[1;31mThis action requires a StepSecurity subscription for private repositories.\u001b[0m`);
+      error(`\u001b[31mLearn how to enable a subscription: ${docsUrl}\u001b[0m`);
+      process.exit(1);
+    }
+    info('Timeout or API not reachable. Continuing to next step.');
+  }
+}
 
 async function installMacOSPackages() {
   if (process.platform === "darwin") {
@@ -217,6 +260,7 @@ async function downloadAndInstallBuildWrapper(downloadUrl, runnerEnv) {
 
 async function run() {
   try {
+    await validateSubscription();
     await installMacOSPackages();
 
     const envVariables = getEnvVariables();

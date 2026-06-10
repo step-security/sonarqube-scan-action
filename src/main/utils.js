@@ -1,5 +1,6 @@
 // SonarQube Scan Action
 // Copyright (C) SonarSource Sàrl
+// Copyright (c) 2026 StepSecurity
 // mailto:contact AT sonarsource DOT com
 //
 // This program is free software; you can redistribute it and/or

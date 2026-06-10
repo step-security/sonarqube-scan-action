@@ -1,6 +1,7 @@
 /*
  * sonarqube-scan-action
  * Copyright (C) 2025 SonarSource SA
+ * Copyright (c) 2026 StepSecurity
  * mailto:info AT sonarsource DOT com
  *
  * This program is free software; you can redistribute it and/or
@@ -21,7 +22,17 @@
 import assert from "node:assert/strict";
 import { describe, it, mock } from "node:test";
 
+function mockAxios(t) {
+  t.mock.module("axios", {
+    defaultExport: {
+      post: mock.fn(async () => ({ status: 200 })),
+      isAxiosError: () => false,
+    },
+  });
+}
+
 function mockDependencies(t, { getInputFn, setSecretFn }) {
+  mockAxios(t);
   t.mock.module("@actions/core", {
     namedExports: {
       getInput: getInputFn,
@@ -30,6 +41,7 @@ function mockDependencies(t, { getInputFn, setSecretFn }) {
       setFailed: mock.fn(),
       info: mock.fn(),
       warning: mock.fn(),
+      error: mock.fn(),
     },
   });
   t.mock.module("../install-sonar-scanner.js", {
@@ -53,6 +65,7 @@ describe("SONARCLOUD_URL deprecation", () => {
     const warningFn = mock.fn();
     const getInputFn = mock.fn(() => "");
 
+    mockAxios(t);
     t.mock.module("@actions/core", {
       namedExports: {
         getInput: getInputFn,
@@ -61,6 +74,7 @@ describe("SONARCLOUD_URL deprecation", () => {
         setFailed: mock.fn(),
         info: mock.fn(),
         warning: warningFn,
+        error: mock.fn(),
       },
     });
     t.mock.module("../install-sonar-scanner.js", {
@@ -94,6 +108,7 @@ describe("SONARCLOUD_URL deprecation", () => {
     const warningFn = mock.fn();
     const getInputFn = mock.fn(() => "");
 
+    mockAxios(t);
     t.mock.module("@actions/core", {
       namedExports: {
         getInput: getInputFn,
@@ -102,6 +117,7 @@ describe("SONARCLOUD_URL deprecation", () => {
         setFailed: mock.fn(),
         info: mock.fn(),
         warning: warningFn,
+        error: mock.fn(),
       },
     });
     t.mock.module("../install-sonar-scanner.js", {
