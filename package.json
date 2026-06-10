@@ -1,0 +1,32 @@
+{
+  "name": "sonarqube-scan-action",
+  "version": "8.2.0",
+  "description": "This StepSecurity project, available as a GitHub Action, scans your projects with SonarQube [Server](https://www.sonarsource.com/products/sonarqube/) or [Cloud](https://www.sonarsource.com/products/sonarcloud/).",
+  "type": "module",
+  "main": "src/main/index.js",
+  "author": "step-security",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/step-security/sonarqube-scan-action.git"
+  },
+  "scripts": {
+    "build": "rollup --config rollup.config.js",
+    "test": "node --experimental-test-module-mocks --test"
+  },
+  "license": "LGPL-3.0-only",
+  "dependencies": {
+    "@actions/core": "3.0.0",
+    "@actions/exec": "2.0.0",
+    "@actions/github": "9.0.0",
+    "@actions/tool-cache": "4.0.0",
+    "axios": "^1.17.0",
+    "string-argv": "0.3.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "29.0.2",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "16.0.3",
+    "mock-fs": "5.5.0",
+    "rollup": "4.60.1"
+  }
+}

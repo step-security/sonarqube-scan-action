@@ -1,0 +1,13 @@
+name: "Install Build Wrapper for C and C++"
+description: >
+  Download and install the Build Wrapper for C, C++, and Objective-C
+  projects analyzed with manual config.
+branding:
+  icon: check
+  color: green
+outputs:
+  build-wrapper-binary:
+    description: "Absolute path to Build Wrapper binary."
+runs:
+  using: node24
+  main: ../dist/install-build-wrapper.js
