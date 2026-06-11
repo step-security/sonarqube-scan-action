@@ -1,7 +1,7 @@
 {
   "name": "sonarqube-scan-action",
   "version": "8.2.0",
-  "description": "This StepSecurity project, available as a GitHub Action, scans your projects with SonarQube [Server](https://www.sonarsource.com/products/sonarqube/) or [Cloud](https://www.sonarsource.com/products/sonarcloud/).",
+  "description": "This StepSecurity project, available as a GitHub-Action, scans your projects with SonarQube [Server](https://www.sonarsource.com/products/sonarqube/) or [Cloud](https://www.sonarsource.com/products/sonarcloud/).",
   "type": "module",
   "main": "src/main/index.js",
   "author": "step-security",
