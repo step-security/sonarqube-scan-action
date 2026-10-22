@@ -1,4 +1,5 @@
 name: "Install Build Wrapper for C and C++"
+author: step-security
 description: >
   Download and install the Build Wrapper for C, C++, and Objective-C
   projects analyzed with manual config.

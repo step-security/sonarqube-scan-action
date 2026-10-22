@@ -1,4 +1,5 @@
 name: 'SonarQube Scan for C and C++'
+author: step-security
 description: 'Scan your C and C++ code with SonarQube to detect bugs, vulnerabilities and code smells.'
 branding:
   icon: check
@@ -116,7 +117,7 @@ runs:
     - name: Cache sonar-scanner installation
       id: cache-sonar-tools
       if: inputs.cache-binaries == 'true'
-      uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       env:
         # The default value is 60mins. Reaching timeout is treated the same as a cache miss.
         SEGMENT_DOWNLOAD_TIMEOUT_MINS: 1

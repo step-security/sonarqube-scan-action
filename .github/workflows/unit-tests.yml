@@ -11,7 +11,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
+      id-token: read
       contents: read
 
     steps:
