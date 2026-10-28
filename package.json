@@ -1,10 +1,12 @@
 {
-  "name": "sonarqube-scan-action",
-  "version": "8.2.0",
+  "name": "@step-security/sonarqube-scan-action",
+  "private": true,
+  "version": "8.3.0",
   "description": "This StepSecurity project, available as a GitHub Action, scans your projects with SonarQube [Server](https://www.sonarsource.com/products/sonarqube/) or [Cloud](https://www.sonarsource.com/products/sonarcloud/).",
   "type": "module",
   "main": "src/main/index.js",
   "author": "step-security",
+  "publisher": "step-security",
   "repository": {
     "type": "git",
     "url": "https://github.com/step-security/sonarqube-scan-action.git"
@@ -15,18 +17,26 @@
   },
   "license": "LGPL-3.0-only",
   "dependencies": {
-    "@actions/core": "^3.0.0",
-    "@actions/exec": "^2.0.0",
-    "@actions/github": "^9.0.0",
+    "@actions/core": "3.0.1",
+    "@actions/exec": "3.0.0",
+    "@actions/github": "9.1.1",
     "@actions/tool-cache": "^4.0.0",
-    "axios": "^1.18.0",
+    "axios": "^1.20.0",
     "string-argv": "^0.3.2"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^29.0.2",
+    "@rollup/plugin-commonjs": "29.0.3",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "mock-fs": "^5.5.0",
-    "rollup": "^4.60.1"
+    "rollup": "4.63.5"
+  },
+  "homepage": "https://github.com/step-security/sonarqube-scan-action#readme",
+  "bugs": {
+    "url": "https://github.com/step-security/sonarqube-scan-action/issues"
+  },
+  "engines": {
+    "node": ">=24",
+    "npm": ">=11"
   }
 }
